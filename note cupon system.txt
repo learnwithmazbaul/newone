@@ -1,0 +1,19 @@
+public function Cupon(){
+        Session::put('discount', [
+            'discount_amount' => $discount,
+            'total_amount' => round(Cart::total() - $discount),
+            'expires_at' => now()->addMinute(1)
+        ]);
+
+        $discountData = Session::get('discount');
+
+        if ($discountData) {
+            if (Carbon::parse($discountData['expires_at'])->isPast()) {
+                // expire hoye gese
+                Session::forget('discount');
+                // return redirect or any work
+            } else {
+                // session thakle discound diben
+            }
+        }
+    }//end method
